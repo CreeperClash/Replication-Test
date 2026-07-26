@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product &middot; Terrinika's Beauty Supply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<main data-page-body>
+  <section class="inner">
+    <div class="page" data-pdp></div>
+  </section>
+  <div data-account-strip></div>
+</main>
+
+<script type="module">
+  import { renderLayout, accountStripHtml, icons, notify } from "/assets/js/layout.js";
+  import { PRODUCTS, findProduct } from "/assets/js/data.js";
+  import { mediaHtml } from "/assets/js/catalog.js";
+  import { addToCart } from "/assets/js/cart-store.js";
+
+  renderLayout({ active: "store", hero: true });
+  document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
+
+  const id = new URLSearchParams(location.search).get("id");
+  const product = findProduct(id) || PRODUCTS[0];
+  document.title = `${product.name} · Terrinika's Beauty Supply`;
+
+  const index = PRODUCTS.indexOf(product);
+  const prev = PRODUCTS[(index - 1 + PRODUCTS.length) % PRODUCTS.length];
+  const next = PRODUCTS[(index + 1) % PRODUCTS.length];
+
+  const optionsHtml = product.options
+    ? `<div>
+         <span class="field-label">Size</span>
+         ${product.options
+           .map(
+             (o, i) =>
+               `<label class="option-row"><input type="radio" name="size" value="${o}" ${i === 0 ? "" : ""}> ${o}</label>`
+           )
+           .join("")}
+       </div>`
+    : "";
+
+  document.querySelector("[data-pdp]").innerHTML = `
+    <div class="pdp">
+      <div class="pdp__media">${mediaHtml(product)}</div>
+      <div>
+        <div class="pdp__nav">
+          <a href="/product.html?id=${prev.id}" aria-label="Previous product">${icons.arrowLeft}</a>
+          <a href="/product.html?id=${next.id}" aria-label="Next product">${icons.arrowRight}</a>
+        </div>
+        <h1 class="pdp__title">${product.name}</h1>
+        <p class="breadcrumb"><a href="/#store">Back to catalog</a></p>
+
+        <!-- Price slot intentionally blank in this demo. -->
+        <div class="pdp__price" data-price-slot data-product-id="${product.id}">${product.price}</div>
+
+        ${optionsHtml}
+
+        <p class="pdp__stock ${product.soldOut ? "pdp__stock--out" : ""}">
+          ${product.soldOut ? "Out of stock" : `In stock: ${product.stock} available`}
+        </p>
+
+        ${
+          product.soldOut
+            ? ""
+            : `<div class="qty-row">
+                 <label for="qty">Quantity:</label>
+                 <input id="qty" type="number" min="1" max="${product.stock}" value="1">
+               </div>
+               <button class="btn btn--primary btn--block" type="button" data-add>Add to Bag</button>`
+        }
+
+        <div class="pdp__share">
+          <div class="pdp__share-title">Share this product with your friends</div>
+          <div class="share" style="justify-content:flex-start">
+            <button type="button" class="share--fb" data-share="facebook">f Share</button>
+            <button type="button" class="share--x" data-share="x">&#120143; Share</button>
+            <button type="button" class="share--pin" data-share="pinterest">Pin it</button>
+          </div>
+        </div>
+
+        <p class="demo-note">
+          <strong>Demo replica</strong>
+          Checkout, inventory and pricing come from the commerce backend on the live
+          site. Adding to the bag works locally so the flow is clickable, but no
+          order is ever placed.
+        </p>
+      </div>
+    </div>`;
+
+  document.querySelector("[data-add]")?.addEventListener("click", () => {
+    const qty = Number(document.getElementById("qty").value) || 1;
+    addToCart(product, qty);
+    notify(`${product.name} × ${qty} added to your bag.`);
+  });
+
+  document.querySelectorAll("[data-share]").forEach((el) =>
+    el.addEventListener("click", () =>
+      notify(`Sharing to ${el.dataset.share} is disabled in this demo replica.`)
+    )
+  );
+</script>
+</body>
+</html>

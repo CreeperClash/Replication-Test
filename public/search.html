@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search &middot; Terrinika's Beauty Supply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<main data-page-body>
+  <section class="inner">
+    <div class="page">
+      <h1 class="page-title" data-heading>Search</h1>
+      <p class="breadcrumb"><a href="/#store">Store</a> &nbsp;/&nbsp; Search</p>
+    </div>
+    <div data-catalog></div>
+  </section>
+  <div data-account-strip></div>
+</main>
+
+<script type="module">
+  import { renderLayout, accountStripHtml } from "/assets/js/layout.js";
+  import { mountCatalog } from "/assets/js/catalog.js";
+  import { PRODUCTS } from "/assets/js/data.js";
+
+  renderLayout({ active: "store", hero: true });
+  document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
+
+  const q = (new URLSearchParams(location.search).get("q") || "").trim();
+  const needle = q.toLowerCase();
+  const items = needle
+    ? PRODUCTS.filter((p) => p.name.toLowerCase().includes(needle))
+    : PRODUCTS;
+
+  document.querySelector("[data-heading]").textContent = q ? `Search: ${q}` : "All products";
+  document.title = `${q ? `Search: ${q}` : "Search"} · Terrinika's Beauty Supply`;
+
+  mountCatalog(document.querySelector("[data-catalog]"), { items });
+</script>
+</body>
+</html>

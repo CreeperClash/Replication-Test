@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Account &middot; Terrinika's Beauty Supply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<main data-page-body>
+  <section class="inner">
+    <div class="page">
+      <div class="account-cols">
+
+        <div>
+          <h1 class="page-title">Account</h1>
+          <p class="breadcrumb"><a href="/#store">Store</a> &nbsp;/&nbsp; Account</p>
+
+          <div class="guest-row">
+            <span class="guest-row__icon" data-guest-icon></span>
+            <span>
+              <strong>Guest account</strong>
+              You are not signed in &nbsp;<a href="#signin">Sign in</a>
+            </span>
+          </div>
+
+          <h2 class="section-title">Shopping cart</h2>
+          <p class="empty-state" data-cart-summary>Your shopping cart is empty</p>
+        </div>
+
+        <div id="signin">
+          <h2 class="page-title">Join us or sign in</h2>
+          <p class="perks"><span>Track orders</span><span>Check out faster</span><span>Sync favorites</span></p>
+          <p class="field-help">
+            For a sign-in, we'll send you a one-time code. An account will be
+            automatically created if you don't have one yet.
+          </p>
+
+          <form data-signin novalidate>
+            <label class="visually-hidden" for="email">Your email address</label>
+            <input class="text-input" id="email" name="email" type="email"
+                   placeholder="Your email address" autocomplete="email">
+            <p class="form-error" data-error hidden></p>
+
+            <!-- Stand-in for the bot-check widget used on the live site. -->
+            <div class="verify-box" data-verify>
+              <span class="verify-box__dot"></span>
+              <span data-verify-text>Verifying&hellip;</span>
+              <span class="verify-box__brand">Bot check<br>placeholder</span>
+            </div>
+
+            <button class="btn btn--primary btn--block" type="submit">Continue</button>
+          </form>
+
+          <p class="demo-note">
+            <strong>Demo replica &mdash; sign-in is not wired up</strong>
+            The real store sends a one-time code through its identity provider.
+            This form validates input and gives feedback so the flow is
+            demonstrable, but no email is sent and no session is created.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <div data-account-strip></div>
+</main>
+
+<script type="module">
+  import { renderLayout, accountStripHtml, icons, notify } from "/assets/js/layout.js";
+  import { getCart } from "/assets/js/cart-store.js";
+
+  renderLayout({ active: "", hero: true });
+  document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
+  document.querySelector("[data-guest-icon]").innerHTML = icons.account;
+
+  const lines = getCart();
+  if (lines.length) {
+    const n = lines.reduce((a, l) => a + l.qty, 0);
+    document.querySelector("[data-cart-summary]").innerHTML =
+      `${n} item${n === 1 ? "" : "s"} in your bag &nbsp;<a href="/cart.html">View bag</a>`;
+  }
+
+  /* The verify widget resolves on its own, mirroring the live page's behaviour. */
+  const box = document.querySelector("[data-verify]");
+  setTimeout(() => {
+    box.classList.add("is-verified");
+    box.querySelector("[data-verify-text]").textContent = "Success!";
+  }, 900);
+
+  const form = document.querySelector("[data-signin]");
+  const error = form.querySelector("[data-error]");
+  const email = form.querySelector("#email");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
+    error.hidden = valid;
+    email.setAttribute("aria-invalid", String(!valid));
+    if (!valid) {
+      error.textContent = "Enter a valid email address.";
+      email.focus();
+      return;
+    }
+    if (!box.classList.contains("is-verified")) {
+      error.hidden = false;
+      error.textContent = "Please wait for the check to finish.";
+      return;
+    }
+    notify("Demo replica — no sign-in code was sent. Connect an auth provider to enable this.");
+  });
+</script>
+</body>
+</html>

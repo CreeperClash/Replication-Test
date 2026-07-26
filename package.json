@@ -1,0 +1,11 @@
+{
+  "name": "terrinikas-beauty-supply-replica",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Static demo replica of the Terrinika's Beauty Supply storefront",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  }
+}

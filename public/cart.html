@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopping Bag &middot; Terrinika's Beauty Supply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<main data-page-body>
+  <section class="inner">
+    <div class="page" style="max-width:760px">
+      <h1 class="page-title">Shopping bag</h1>
+      <p class="breadcrumb"><a href="/#store">Store</a> &nbsp;/&nbsp; Shopping bag</p>
+
+      <div data-lines></div>
+
+      <div class="cart-total">
+        <span>Subtotal</span>
+        <!-- Price slot intentionally blank in this demo. -->
+        <span class="price" data-price-slot data-total></span>
+      </div>
+
+      <button class="btn btn--primary btn--block" type="button" data-checkout>Checkout</button>
+
+      <p class="demo-note">
+        <strong>Demo replica &mdash; checkout is not wired up</strong>
+        Payment, tax and shipping are handled by the commerce and payment
+        providers on the live site. The bag is stored in your browser only;
+        nothing is charged and no order is created.
+      </p>
+    </div>
+  </section>
+  <div data-account-strip></div>
+</main>
+
+<script type="module">
+  import { renderLayout, accountStripHtml, notify } from "/assets/js/layout.js";
+  import { getCart, removeFromCart, clearCart } from "/assets/js/cart-store.js";
+  import { findProduct } from "/assets/js/data.js";
+  import { mediaHtml } from "/assets/js/catalog.js";
+
+  renderLayout({ active: "", hero: true });
+  document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
+
+  const host = document.querySelector("[data-lines]");
+
+  function draw() {
+    const lines = getCart();
+    if (!lines.length) {
+      host.innerHTML = `<p class="empty-state">Your shopping cart is empty. <a href="/#store">Continue shopping</a></p>`;
+      return;
+    }
+    host.innerHTML = lines
+      .map((l) => {
+        const p = findProduct(l.id);
+        return `
+        <div class="cart-line">
+          <div class="cart-line__media">${p ? mediaHtml(p) : ""}</div>
+          <div>
+            <div class="cart-line__name">${l.name}</div>
+            <div>Qty: ${l.qty}</div>
+            <button type="button" data-remove="${l.id}">Remove</button>
+          </div>
+          <!-- Price slot intentionally blank in this demo. -->
+          <span class="price" data-price-slot data-product-id="${l.id}"></span>
+        </div>`;
+      })
+      .join("") +
+      `<p style="padding-top:14px"><button type="button" class="btn btn--secondary" data-clear>Empty bag</button></p>`;
+  }
+
+  host.addEventListener("click", (e) => {
+    const rm = e.target.closest("[data-remove]");
+    if (rm) { removeFromCart(rm.dataset.remove); draw(); }
+    if (e.target.closest("[data-clear]")) { clearCart(); draw(); }
+  });
+
+  document.querySelector("[data-checkout]").addEventListener("click", () =>
+    notify("Demo replica — checkout is disabled. Connect a payment provider to enable it.")
+  );
+
+  draw();
+</script>
+</body>
+</html>
