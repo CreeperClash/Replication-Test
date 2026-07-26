@@ -11,14 +11,24 @@ node server.js          # http://localhost:5173
 node server.js --port 8080
 ```
 
-No dependencies. Live reload is built in — edit anything under `public/` and the
+No dependencies. Live reload is built in — edit anything under `docs/` and the
 open page refreshes.
+
+## Hosting on GitHub Pages
+
+The site lives in `docs/` so Pages can serve it straight from `main`:
+
+**Settings → Pages → Source: Deploy from a branch → Branch: `main` / `/docs`**
+
+All internal links and asset paths are relative, so it works both at a domain
+root and under a project subpath like `/Replication-Test/`. A `.nojekyll` file
+tells Pages to serve the directory as-is.
 
 ## What's here
 
 ```
 server.js                     zero-dep dev server (static + live reload)
-public/
+docs/                         the site — also the GitHub Pages root
   index.html                  home: hero, catalog, about, footer
   product.html?id=…           product detail
   account.html                account + "Join us or sign in"

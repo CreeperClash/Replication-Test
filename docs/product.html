@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
@@ -19,17 +20,17 @@
 </main>
 
 <script type="module">
-  import { renderLayout, accountStripHtml, icons, notify } from "/assets/js/layout.js";
-  import { PRODUCTS, findProduct } from "/assets/js/data.js";
-  import { mediaHtml } from "/assets/js/catalog.js";
-  import { addToCart } from "/assets/js/cart-store.js";
+  import { renderLayout, accountStripHtml, icons, notify } from "./assets/js/layout.js";
+  import { PRODUCTS, findProduct } from "./assets/js/data.js";
+  import { mediaHtml } from "./assets/js/catalog.js";
+  import { addToCart } from "./assets/js/cart-store.js";
 
   renderLayout({ active: "store", hero: true });
   document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
 
   const id = new URLSearchParams(location.search).get("id");
   const product = findProduct(id) || PRODUCTS[0];
-  document.title = `${product.name} · Terrinika's Beauty Supply`;
+  document.title = `${product.name} Â· Terrinika's Beauty Supply`;
 
   const index = PRODUCTS.indexOf(product);
   const prev = PRODUCTS[(index - 1 + PRODUCTS.length) % PRODUCTS.length];
@@ -52,11 +53,11 @@
       <div class="pdp__media">${mediaHtml(product)}</div>
       <div>
         <div class="pdp__nav">
-          <a href="/product.html?id=${prev.id}" aria-label="Previous product">${icons.arrowLeft}</a>
-          <a href="/product.html?id=${next.id}" aria-label="Next product">${icons.arrowRight}</a>
+          <a href="product.html?id=${prev.id}" aria-label="Previous product">${icons.arrowLeft}</a>
+          <a href="product.html?id=${next.id}" aria-label="Next product">${icons.arrowRight}</a>
         </div>
         <h1 class="pdp__title">${product.name}</h1>
-        <p class="breadcrumb"><a href="/#store">Back to catalog</a></p>
+        <p class="breadcrumb"><a href="index.html#store">Back to catalog</a></p>
 
         <!-- Price slot intentionally blank in this demo. -->
         <div class="pdp__price" data-price-slot data-product-id="${product.id}">${product.price}</div>
@@ -98,7 +99,7 @@
   document.querySelector("[data-add]")?.addEventListener("click", () => {
     const qty = Number(document.getElementById("qty").value) || 1;
     addToCart(product, qty);
-    notify(`${product.name} × ${qty} added to your bag.`);
+    notify(`${product.name} Ã— ${qty} added to your bag.`);
   });
 
   document.querySelectorAll("[data-share]").forEach((el) =>

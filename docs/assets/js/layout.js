@@ -30,8 +30,8 @@ function headerHtml(active) {
   <div class="site-header__inner">
     <nav class="site-nav" aria-label="Primary">
       <ul>
-        <li><a href="/#store"${mark("store")}>Store</a></li>
-        <li><a href="/#about"${mark("about")}>About</a></li>
+        <li><a href="index.html#store"${mark("store")}>Store</a></li>
+        <li><a href="index.html#about"${mark("about")}>About</a></li>
       </ul>
     </nav>
     <div class="header-utils">
@@ -55,7 +55,7 @@ function heroHtml() {
 
   <div class="hero__inner">
     <!-- FILLER: circular brand logo / icon. -->
-    <a class="hero__logo" href="/" aria-label="${STORE.name} home">
+    <a class="hero__logo" href="index.html" aria-label="${STORE.name} home">
       <span class="ph" role="img" aria-label="Logo placeholder">
         <span class="ph__label">Logo</span>
       </span>
@@ -63,10 +63,10 @@ function heroHtml() {
 
     <p class="hero__tagline">${STORE.tagline}</p>
     <h1 class="hero__title">${STORE.heroTitle}</h1>
-    <a class="hero__cta" href="/#store">Shop Now</a>
+    <a class="hero__cta" href="index.html#store">Shop Now</a>
   </div>
 
-  <a class="hero__chevron" href="/#store" aria-label="Scroll to store">${icons.chevronDown}</a>
+  <a class="hero__chevron" href="index.html#store" aria-label="Scroll to store">${icons.chevronDown}</a>
 </section>`;
 }
 
@@ -102,9 +102,9 @@ function footerHtml() {
 export function accountStripHtml() {
   return `
 <nav class="account-strip" aria-label="Account">
-  <a href="/account.html">${icons.account}<span>My Account</span></a>
-  <a href="/orders.html">${icons.orders}<span>Track Orders</span></a>
-  <a href="/cart.html">${icons.bag}<span>Shopping Bag</span></a>
+  <a href="account.html">${icons.account}<span>My Account</span></a>
+  <a href="orders.html">${icons.orders}<span>Track Orders</span></a>
+  <a href="cart.html">${icons.bag}<span>Shopping Bag</span></a>
 </nav>`;
 }
 
@@ -112,7 +112,7 @@ function searchHtml() {
   return `
 <button class="search-fab" type="button" aria-label="Search products" aria-expanded="false">${icons.search}</button>
 <div class="search-panel" role="search">
-  <form action="/search.html" method="get">
+  <form action="search.html" method="get">
     <input type="search" name="q" placeholder="Search products" aria-label="Search products">
     <button class="btn btn--primary" type="submit">Search</button>
   </form>

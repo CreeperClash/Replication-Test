@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
@@ -15,7 +16,7 @@
   <section class="inner">
     <div class="page" style="max-width:760px">
       <h1 class="page-title">Shopping bag</h1>
-      <p class="breadcrumb"><a href="/#store">Store</a> &nbsp;/&nbsp; Shopping bag</p>
+      <p class="breadcrumb"><a href="index.html#store">Store</a> &nbsp;/&nbsp; Shopping bag</p>
 
       <div data-lines></div>
 
@@ -39,10 +40,10 @@
 </main>
 
 <script type="module">
-  import { renderLayout, accountStripHtml, notify } from "/assets/js/layout.js";
-  import { getCart, removeFromCart, clearCart } from "/assets/js/cart-store.js";
-  import { findProduct } from "/assets/js/data.js";
-  import { mediaHtml } from "/assets/js/catalog.js";
+  import { renderLayout, accountStripHtml, notify } from "./assets/js/layout.js";
+  import { getCart, removeFromCart, clearCart } from "./assets/js/cart-store.js";
+  import { findProduct } from "./assets/js/data.js";
+  import { mediaHtml } from "./assets/js/catalog.js";
 
   renderLayout({ active: "", hero: true });
   document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
@@ -52,7 +53,7 @@
   function draw() {
     const lines = getCart();
     if (!lines.length) {
-      host.innerHTML = `<p class="empty-state">Your shopping cart is empty. <a href="/#store">Continue shopping</a></p>`;
+      host.innerHTML = `<p class="empty-state">Your shopping cart is empty. <a href="index.html#store">Continue shopping</a></p>`;
       return;
     }
     host.innerHTML = lines
@@ -81,7 +82,7 @@
   });
 
   document.querySelector("[data-checkout]").addEventListener("click", () =>
-    notify("Demo replica — checkout is disabled. Connect a payment provider to enable it.")
+    notify("Demo replica â€” checkout is disabled. Connect a payment provider to enable it.")
   );
 
   draw();

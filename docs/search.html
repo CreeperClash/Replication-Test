@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
@@ -15,7 +16,7 @@
   <section class="inner">
     <div class="page">
       <h1 class="page-title" data-heading>Search</h1>
-      <p class="breadcrumb"><a href="/#store">Store</a> &nbsp;/&nbsp; Search</p>
+      <p class="breadcrumb"><a href="index.html#store">Store</a> &nbsp;/&nbsp; Search</p>
     </div>
     <div data-catalog></div>
   </section>
@@ -23,9 +24,9 @@
 </main>
 
 <script type="module">
-  import { renderLayout, accountStripHtml } from "/assets/js/layout.js";
-  import { mountCatalog } from "/assets/js/catalog.js";
-  import { PRODUCTS } from "/assets/js/data.js";
+  import { renderLayout, accountStripHtml } from "./assets/js/layout.js";
+  import { mountCatalog } from "./assets/js/catalog.js";
+  import { PRODUCTS } from "./assets/js/data.js";
 
   renderLayout({ active: "store", hero: true });
   document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
@@ -37,7 +38,7 @@
     : PRODUCTS;
 
   document.querySelector("[data-heading]").textContent = q ? `Search: ${q}` : "All products";
-  document.title = `${q ? `Search: ${q}` : "Search"} · Terrinika's Beauty Supply`;
+  document.title = `${q ? `Search: ${q}` : "Search"} Â· Terrinika's Beauty Supply`;
 
   mountCatalog(document.querySelector("[data-catalog]"), { items });
 </script>

@@ -29,7 +29,7 @@ export const PAGE_SIZE = 24;
  * images named `<slug>.jpg` and flip USE_REAL_IMAGES to true to swap them in.
  */
 export const USE_REAL_IMAGES = false;
-export const PRODUCT_IMAGE_BASE = "/assets/img/products/";
+export const PRODUCT_IMAGE_BASE = "assets/img/products/";
 
 const raw = [
   ["DE B&S HCO LEAVE IN CONDITIONER", true],

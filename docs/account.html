@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Cardo:400,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
@@ -18,7 +19,7 @@
 
         <div>
           <h1 class="page-title">Account</h1>
-          <p class="breadcrumb"><a href="/#store">Store</a> &nbsp;/&nbsp; Account</p>
+          <p class="breadcrumb"><a href="index.html#store">Store</a> &nbsp;/&nbsp; Account</p>
 
           <div class="guest-row">
             <span class="guest-row__icon" data-guest-icon></span>
@@ -71,8 +72,8 @@
 </main>
 
 <script type="module">
-  import { renderLayout, accountStripHtml, icons, notify } from "/assets/js/layout.js";
-  import { getCart } from "/assets/js/cart-store.js";
+  import { renderLayout, accountStripHtml, icons, notify } from "./assets/js/layout.js";
+  import { getCart } from "./assets/js/cart-store.js";
 
   renderLayout({ active: "", hero: true });
   document.querySelector("[data-account-strip]").innerHTML = accountStripHtml();
@@ -82,7 +83,7 @@
   if (lines.length) {
     const n = lines.reduce((a, l) => a + l.qty, 0);
     document.querySelector("[data-cart-summary]").innerHTML =
-      `${n} item${n === 1 ? "" : "s"} in your bag &nbsp;<a href="/cart.html">View bag</a>`;
+      `${n} item${n === 1 ? "" : "s"} in your bag &nbsp;<a href="cart.html">View bag</a>`;
   }
 
   /* The verify widget resolves on its own, mirroring the live page's behaviour. */
@@ -111,7 +112,7 @@
       error.textContent = "Please wait for the check to finish.";
       return;
     }
-    notify("Demo replica — no sign-in code was sent. Connect an auth provider to enable this.");
+    notify("Demo replica â€” no sign-in code was sent. Connect an auth provider to enable this.");
   });
 </script>
 </body>

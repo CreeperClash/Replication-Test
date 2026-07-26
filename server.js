@@ -11,7 +11,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(__dirname, "public");
+/* Site root. Named `docs/` so GitHub Pages can serve it directly from main. */
+const ROOT = path.join(__dirname, "docs");
 
 const argPort = process.argv.indexOf("--port");
 const PORT = Number(
@@ -135,5 +136,5 @@ server.listen(PORT, () => {
   console.log(`\n  Terrinika's Beauty Supply — demo replica`);
   console.log(`  ➜  http://localhost:${PORT}\n`);
   console.log(`  Serving ${ROOT}`);
-  console.log(`  Live reload is on — edit files in public/ and the page refreshes.\n`);
+  console.log(`  Live reload is on — edit files in docs/ and the page refreshes.\n`);
 });

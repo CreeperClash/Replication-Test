@@ -18,7 +18,7 @@ export function mediaHtml(product) {
 }
 
 export function cardHtml(product) {
-  const href = `/product.html?id=${product.id}`;
+  const href = `product.html?id=${product.id}`;
   return `
 <article class="card">
   ${product.soldOut ? '<span class="card__badge">Sold out</span>' : ""}
